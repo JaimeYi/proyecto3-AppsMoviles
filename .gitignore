@@ -1,0 +1,22 @@
+# Visual Studio / Visual Studio Code
+.vs/
+.vscode/
+bin/
+obj/
+AppEnv/
+*.user
+*.suo
+*.useros
+*.userprefs
+*.pyc
+
+# Local Database Files
+*.db3
+*.db
+*.sqlite
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:proyecto3.ViewModels"
+             xmlns:models="clr-namespace:proyecto3.Models"
+             x:Class="proyecto3.MainPage"
+             x:DataType="viewmodels:MainViewModel"
+             Title="Control de Gastos"
+             BackgroundColor="#F3F4F6">
+
+    <Grid RowDefinitions="180, *">
+        <!-- Header (Dark Purple background) -->
+        <Grid Grid.Row="0" BackgroundColor="#2A114E" Padding="20">
+            <VerticalStackLayout VerticalOptions="Center" Margin="10,0,0,20">
+                <Label Text="Hola," 
+                       TextColor="White" 
+                       Opacity="0.8" 
+                       FontSize="16" />
+                <Label Text="Juanito Perez" 
+                       TextColor="White" 
+                       FontSize="24" 
+                       FontAttributes="Bold" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- Main Content Area -->
+        <Grid Grid.Row="1" RowDefinitions="Auto, *" Margin="20,-40,20,20">
+            <!-- Overlapping Balance Card -->
+            <Grid Grid.Row="0">
+                <Border Padding="24"
+                        BackgroundColor="White"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 16"
+                        Margin="0,0,0,24">
+                    <Border.Shadow>
+                        <Shadow Brush="#000000" Offset="0,4" Radius="10" Opacity="0.15" />
+                    </Border.Shadow>
+
+                    <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, *">
+                        <!-- Total Balance -->
+                        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                               Text="Balance" 
+                               TextColor="#6B7280" 
+                               FontSize="14" 
+                               FontAttributes="Bold" />
+                        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                               Text="{Binding BalanceTotal, StringFormat='{0:C}'}" 
+                               TextColor="#111827" 
+                               FontSize="32" 
+                               FontAttributes="Bold" 
+                               Margin="0,4,0,20" />
+
+                        <!-- Incomes and Expenses row -->
+                        <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="2">
+                            <Label Text="Ingresos" 
+                                   TextColor="#6B7280" 
+                                   FontSize="12" 
+                                   FontAttributes="Bold" />
+                            <Label Text="{Binding TotalIngresos, StringFormat='{0:C}'}" 
+                                   TextColor="#111827" 
+                                   FontSize="16" 
+                                   FontAttributes="Bold" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Row="2" Grid.Column="1" Spacing="2">
+                            <Label Text="Egresos" 
+                                   TextColor="#6B7280" 
+                                   FontSize="12" 
+                                   FontAttributes="Bold" />
+                            <Label Text="{Binding TotalGastos, StringFormat='{0:C}'}" 
+                                   TextColor="#111827" 
+                                   FontSize="16" 
+                                   FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Circular FAB Overlapping Card bottom right -->
+                <Button WidthRequest="56"
+                        HeightRequest="56"
+                        CornerRadius="28"
+                        Text="+"
+                        FontSize="28"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        BackgroundColor="#2A114E"
+                        Command="{Binding NavegarNuevaTransaccionCommand}"
+                        HorizontalOptions="End"
+                        VerticalOptions="End"
+                        Margin="0,0,24,0">
+                    <Button.Shadow>
+                        <Shadow Brush="#000000" Offset="0,4" Radius="6" Opacity="0.3" />
+                    </Button.Shadow>
+                </Button>
+            </Grid>
+
+            <!-- Transactions Section -->
+            <Grid Grid.Row="1" RowDefinitions="Auto, *">
+                <Label Grid.Row="0"
+                       Text="Transacciones" 
+                       TextColor="#374151" 
+                       FontSize="18" 
+                       FontAttributes="Bold" 
+                       Margin="0,0,0,12" />
+
+                <!-- Empty State -->
+                <Label Grid.Row="1"
+                       Text="Sin datos, click en el botón + para agregar una nueva transacción" 
+                       TextColor="#6B7280"
+                       FontSize="14"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Padding="20"
+                       IsVisible="{Binding IsListEmpty}" />
+
+                <!-- List of Transactions -->
+                <CollectionView Grid.Row="1"
+                                ItemsSource="{Binding Transacciones}"
+                                IsVisible="{Binding IsListNotEmpty}"
+                                SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Transaccion">
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Eliminar"
+                                                   BackgroundColor="#B91C1C"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MainViewModel}}, Path=EliminarTransaccionCommand}"
+                                                   CommandParameter="{Binding .}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+
+                                <Border Margin="0,0,0,8"
+                                        Padding="16"
+                                        BackgroundColor="White"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 12">
+                                    <Grid ColumnDefinitions="*, Auto">
+                                        <!-- Title and Date -->
+                                        <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                            <Label Text="{Binding Glosa}" 
+                                                   TextColor="#111827" 
+                                                   FontSize="16" 
+                                                   FontAttributes="Bold" />
+                                            <Label Text="{Binding FechaFormateada}" 
+                                                   TextColor="#9CA3AF" 
+                                                   FontSize="12" />
+                                        </VerticalStackLayout>
+
+                                        <!-- Amount -->
+                                        <Label Grid.Column="1"
+                                               Text="{Binding CantidadFormateada}" 
+                                               TextColor="{Binding ColorMonto}" 
+                                               FontSize="16" 
+                                               FontAttributes="Bold" 
+                                               VerticalOptions="Center" />
+                                    </Grid>
+                                </Border>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>
