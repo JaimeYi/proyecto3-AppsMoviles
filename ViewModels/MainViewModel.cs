@@ -151,7 +151,6 @@ namespace proyecto3.ViewModels
             IsEditingName = false;
         }
 
-        // Lógica de negocio requerida por la rúbrica de evaluación:
         public void CalcularBalance()
         {
             BalanceTotal = TotalIngresos - TotalGastos;

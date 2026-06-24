@@ -21,12 +21,11 @@ namespace proyecto3.Models
         [NotNull]
         public bool EsIngreso { get; set; }
 
-        // Propiedades de presentación para simplificar los enlaces en XAML
         [Ignore]
         public string CantidadFormateada => $"{(EsIngreso ? "+" : "-")} {Cantidad:C}";
 
         [Ignore]
-        public string ColorMonto => EsIngreso ? "#22C55E" : "#B91C1C"; // Verde claro y Rojo oscuro, estéticos y accesibles
+        public string ColorMonto => EsIngreso ? "#22C55E" : "#B91C1C";
 
         [Ignore]
         public string FechaFormateada => Fecha.ToString("dd-MM-yyyy");
