@@ -24,11 +24,11 @@
                            FontSize="24" 
                            FontAttributes="Bold" 
                            VerticalOptions="Center" />
-                    <Button Text="✏️"
+                    <Button Text="Editar"
                             Command="{Binding IniciarEdicionNombreCommand}"
                             TextColor="White"
                             BackgroundColor="Transparent"
-                            FontSize="18"
+                            FontSize="10"
                             Padding="0"
                             HeightRequest="32"
                             WidthRequest="32"
