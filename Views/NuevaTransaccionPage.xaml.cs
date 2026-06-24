@@ -1,4 +1,3 @@
-using Microsoft.Maui.Controls;
 using proyecto3.ViewModels;
 
 namespace proyecto3.Views

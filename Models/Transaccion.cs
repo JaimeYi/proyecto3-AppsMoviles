@@ -1,5 +1,4 @@
 using SQLite;
-using System;
 
 namespace proyecto3.Models
 {

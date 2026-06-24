@@ -2,9 +2,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using proyecto3.Models;
 using proyecto3.Services;
-using System;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
 
 namespace proyecto3.ViewModels
 {

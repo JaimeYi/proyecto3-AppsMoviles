@@ -4,9 +4,6 @@ using proyecto3.Models;
 using proyecto3.Services;
 using proyecto3.Views;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
 
 namespace proyecto3.ViewModels
 {

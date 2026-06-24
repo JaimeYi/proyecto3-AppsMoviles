@@ -1,7 +1,4 @@
 using SQLite;
-using System.IO;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using proyecto3.Models;
 
 namespace proyecto3.Services
