@@ -49,5 +49,11 @@ namespace proyecto3.Services
             await InitAsync();
             return await _database!.DeleteAsync(transaccion);
         }
+
+        public async Task<int> DeleteAllTransaccionesAsync()
+        {
+            await InitAsync();
+            return await _database!.DeleteAllAsync<Transaccion>();
+        }
     }
 }

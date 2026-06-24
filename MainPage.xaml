@@ -8,7 +8,9 @@
              Title="Control de Gastos"
              BackgroundColor="#F3F4F6">
 
-    <Grid RowDefinitions="180, *">
+    <Grid>
+        <!-- Pantalla Principal -->
+        <Grid RowDefinitions="180, *">
         <!-- Header (Dark Purple background) -->
         <Grid Grid.Row="0" BackgroundColor="#2A114E" Padding="20">
             <VerticalStackLayout VerticalOptions="Center" Margin="10,0,0,20">
@@ -16,10 +18,23 @@
                        TextColor="White" 
                        Opacity="0.8" 
                        FontSize="16" />
-                <Label Text="Juanito Perez" 
-                       TextColor="White" 
-                       FontSize="24" 
-                       FontAttributes="Bold" />
+                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                    <Label Text="{Binding UsuarioNombreCompleto}" 
+                           TextColor="White" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           VerticalOptions="Center" />
+                    <Button Text="✏️"
+                            Command="{Binding IniciarEdicionNombreCommand}"
+                            TextColor="White"
+                            BackgroundColor="Transparent"
+                            FontSize="18"
+                            Padding="0"
+                            HeightRequest="32"
+                            WidthRequest="32"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center" />
+                </HorizontalStackLayout>
             </VerticalStackLayout>
         </Grid>
 
@@ -96,12 +111,28 @@
 
             <!-- Transactions Section -->
             <Grid Grid.Row="1" RowDefinitions="Auto, *">
-                <Label Grid.Row="0"
-                       Text="Transacciones" 
-                       TextColor="#374151" 
-                       FontSize="18" 
-                       FontAttributes="Bold" 
-                       Margin="0,0,0,12" />
+                <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,12,0,12">
+                    <Label Grid.Column="0"
+                           Text="Transacciones" 
+                           TextColor="#374151" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           VerticalOptions="Center" />
+                    <Button Grid.Column="1"
+                            Text="Limpiar Historial"
+                            TextColor="White"
+                            BackgroundColor="#2A114E"
+                            BorderColor="#2A114E"
+                            BorderWidth="1"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            Padding="12,0"
+                            HeightRequest="28"
+                            CornerRadius="8"
+                            Command="{Binding LimpiarHistorialCommand}"
+                            IsVisible="{Binding IsListNotEmpty}"
+                            VerticalOptions="Center" />
+                </Grid>
 
                 <!-- Empty State -->
                 <Label Grid.Row="1"
@@ -162,6 +193,75 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </Grid>
+        </Grid>
+    </Grid>
+
+        <!-- Modal de Edición de Nombre (Overlay) -->
+        <Grid BackgroundColor="#80000000"
+              IsVisible="{Binding IsEditingName, FallbackValue=False, TargetNullValue=False}">
+            <Border VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    WidthRequest="320"
+                    Padding="24"
+                    BackgroundColor="White"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 16">
+                <Border.Shadow>
+                    <Shadow Brush="#000000" Offset="0,4" Radius="8" Opacity="0.2" />
+                </Border.Shadow>
+                
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="Editar Perfil"
+                           TextColor="#111827"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           Margin="0,0,0,8" />
+                           
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Nombre"
+                               TextColor="#374151"
+                               FontSize="14"
+                               FontAttributes="Bold" />
+                        <Entry Text="{Binding EditNombre}"
+                               Placeholder="Ej. Juanito"
+                               TextColor="#111827"
+                               BackgroundColor="#F3F4F6"
+                               HeightRequest="44" />
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Apellido (Opcional)"
+                               TextColor="#374151"
+                               FontSize="14"
+                               FontAttributes="Bold" />
+                        <Entry Text="{Binding EditApellido}"
+                               Placeholder="Ej. Pérez"
+                               TextColor="#111827"
+                               BackgroundColor="#F3F4F6"
+                               HeightRequest="44" />
+                    </VerticalStackLayout>
+                    
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="12" Margin="0,12,0,0">
+                        <Button Grid.Column="0"
+                                Text="Cancelar"
+                                TextColor="#4B5563"
+                                BackgroundColor="Transparent"
+                                BorderColor="#D1D5DB"
+                                BorderWidth="1"
+                                CornerRadius="8"
+                                HeightRequest="40"
+                                Command="{Binding CancelarEdicionNombreCommand}" />
+                        <Button Grid.Column="1"
+                                Text="Guardar"
+                                TextColor="White"
+                                BackgroundColor="#2A114E"
+                                CornerRadius="8"
+                                HeightRequest="40"
+                                Command="{Binding GuardarNombreCommand}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
         </Grid>
     </Grid>
 </ContentPage>
